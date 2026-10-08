@@ -1,0 +1,26 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
+    match /reports/{reportId}/{fileName} {
+      // Gli utenti possono allegare solo immagini al ticket che stanno creando.
+      // App Check deve essere ENFORCED in Firebase per ridurre gli abusi da client non autorizzati.
+      allow create: if reportId.matches('^(BUG|GIO|COS|TOR|CIT|FUR|PVP|CLA|RIC|ALT)-[0-9]{3,}$')
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/(png|jpeg|webp)');
+
+      // Solo lo staff autenticato come admin può vedere o eliminare gli allegati.
+      allow read, delete: if isAdmin();
+      allow update: if false;
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

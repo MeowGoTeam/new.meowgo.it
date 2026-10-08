@@ -1,0 +1,10 @@
+MEOWGO MINECRAFT — INSTALLAZIONE
+
+1. Carica tutta la cartella mc su new.meowgo.it.
+2. Pagina pubblica: /mc/
+3. Segnalazioni: /mc/report/
+4. Area segnalazioni: /mc/joefsdvn.html
+5. Pubblica database.rules.json nel Realtime Database.
+6. Questa versione NON usa Firebase Authentication.
+
+ATTENZIONE: l'URL casuale non è una misura di sicurezza. La pagina admin legge i dati direttamente dal database; con questa configurazione le segnalazioni sono leggibili da chiunque riesca ad accedere al database. Se le segnalazioni contengono email o dati personali, è fortemente consigliata una versione con autenticazione e regole private.
